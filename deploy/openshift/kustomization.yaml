@@ -1,0 +1,15 @@
+# oc apply -k deploy/openshift  (in the target project; edit configmap.yaml and secret.yaml first)
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+  - pairs:
+      app.kubernetes.io/name: gpu-sizing
+    includeSelectors: true
+resources:
+  - imagestream.yaml
+  - buildconfig.yaml
+  - configmap.yaml
+  - secret.yaml
+  - deployment.yaml
+  - service.yaml
+  - route.yaml
