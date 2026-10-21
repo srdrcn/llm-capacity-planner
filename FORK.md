@@ -62,7 +62,14 @@ The workflows use `peter-evans/create-pull-request`. Enable *Settings → Action
 create and approve pull requests*. On GitHub Enterprise the action must be mirrored and the runner must reach
 `github.com` and `epoch.ai`.
 
-## 3. OpenShift (`Containerfile`, `deploy/openshift/`)
+## 3. Public demo on Render (free)
+
+`render.yaml` is a Render Blueprint: in the Render dashboard choose *New → Blueprint*, connect this repository and
+apply. It builds the `Containerfile` on the free plan (512 MB, no credit card) and redeploys on every push to `main`.
+A free service sleeps after 15 minutes without traffic and takes about a minute to wake. Set `HF_TOKEN` in the
+dashboard to read gated models.
+
+## 4. OpenShift (`Containerfile`, `deploy/openshift/`)
 
 ```bash
 # edit the proxy in deploy/openshift/configmap.yaml and the HF token in secret.yaml

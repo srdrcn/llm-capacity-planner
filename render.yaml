@@ -1,0 +1,18 @@
+# Render Blueprint: the web service on Render's free plan (Dashboard → New → Blueprint → this repository).
+# Free web services sleep after 15 minutes without traffic; the next visit wakes them in about a minute.
+services:
+  - type: web
+    name: gpu-sizing
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Containerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      # Optional: a Hugging Face read token for gated models (Llama, Gemma…). Set it in the dashboard.
+      - key: HF_TOKEN
+        sync: false
+      - key: PLAN_CONCURRENCY
+        value: "2"
