@@ -1,6 +1,6 @@
 # LLM Capacity Planner — GPU memory and concurrency calculator for vLLM and SGLang
 
-[![CI](https://img.shields.io/github/actions/workflow/status/nemmusu/llm-capacity-planner/ci.yml?branch=main&label=CI&logo=github)](https://github.com/nemmusu/llm-capacity-planner/actions/workflows/ci.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/srdrcn/llm-capacity-planner/ci.yml?branch=main&label=CI&logo=github)](https://github.com/srdrcn/llm-capacity-planner/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/nemmusu/llm-capacity-planner?sort=semver)](https://github.com/nemmusu/llm-capacity-planner/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Node.js 22 or newer](https://img.shields.io/badge/node-%3E%3D22-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -11,6 +11,18 @@
 **A GPU sizing tool for LLM inference: for any Hugging Face model, it computes the VRAM the model needs on vLLM or SGLang (weights and KV cache), which NVIDIA GPUs fit it, from an RTX 3090 to H100, H200, B200 and B300 servers, how many concurrent users they serve and how many tokens per second each user gets.**
 
 It is a VRAM and throughput calculator, not a benchmark. No GPU, no engine, nothing is run (unless you ask it to read this PC's card with `--this-pc`, which runs `nvidia-smi`): it computes from the model files and calibrated data. The model is never downloaded: only `config.json` and the safetensors headers (a few KB per shard, via HTTP Range requests) are read, and the models of the built-in catalog work offline.
+
+> **This fork** ([srdrcn/llm-capacity-planner](https://github.com/srdrcn/llm-capacity-planner)) adds a web service with a
+> browser page, keeps its data current on its own, and deploys to OpenShift. Details in [FORK.md](FORK.md).
+>
+> - **Web service** (`npm run serve`): type a Hugging Face model id and get, for every NVIDIA card, the memory per GPU
+>   (weights, KV cache, fixed costs), the smallest TP / PP layout that fits and, for a number of concurrent requests,
+>   the copies, GPUs and servers they take. Memory only: the speed figures stay in the command line.
+> - **Compatibility matrix on the latest engines**: a weekly job moves it to each new vLLM / SGLang release when every
+>   cited line of engine code is still there, and otherwise opens a draft pull request listing what to verify.
+> - **GPU catalog checked against [Epoch AI](https://epoch.ai/data/machine-learning-hardware)**: a daily job reports new
+>   NVIDIA cards as drafts and flags values that differ from the datasheets.
+> - **OpenShift**: `Containerfile` and manifests in `deploy/openshift/` (`oc apply -k deploy/openshift`).
 
 <!-- generated:top -->
 ![Long documents (128k tokens), 200 users: terminal output of llm-capacity-planner zai-org/GLM-5.3 --tokens 128k --users 200](docs/images/long-documents.svg)
@@ -57,7 +69,7 @@ requests), and the servers it takes; users are per server.
 </details>
 <!-- /generated:top -->
 
-**Contents:** [Download](#download) · [Quick start](#quick-start) · [Features](#features) ·
+**Contents:** [This fork](FORK.md) · [Download](#download) · [Quick start](#quick-start) · [Features](#features) ·
 [How accurate is it](#how-accurate-is-it) · [Examples](#examples) · [Options](#options) · [Limits](#limits) · [How it works](#how-it-works) ·
 [Contributing](#contributing) · [License](#license)
 
