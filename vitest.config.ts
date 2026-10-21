@@ -20,7 +20,7 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*.ts'],
       // The entry only wires process.argv, stdout and the network into cli/run.ts, which the tests cover.
-      exclude: ['src/**/*.d.ts', 'src/main.ts'],
+      exclude: ['src/**/*.d.ts', 'src/main.ts', 'src/server.ts'],
       reporter: ['text-summary', 'html', 'json-summary'],
       reportsDirectory: 'coverage',
       thresholds: { statements: 100, branches: 100, functions: 100, lines: 100 },

@@ -1,0 +1,37 @@
+{
+  "$comment": "How Epoch AI's ML hardware dataset (https://epoch.ai/data/ml_hardware.csv, CC BY) names the cards of hardware.json. scripts/sync/epoch.mjs reads it: 'map' pairs an Epoch 'Hardware name' with a hardware.json id (values are cross-checked), 'ignore' lists NVIDIA rows deliberately left out of the catalog, with the reason. Any other NVIDIA row is reported as a new card. A name in 'map' that Epoch no longer lists is reported too (renamed upstream?).",
+  "map": {
+    "NVIDIA GeForce RTX 3090": "rtx-3090-24gb",
+    "NVIDIA GeForce RTX 4090": "rtx-4090-24gb",
+    "NVIDIA RTX A6000": "rtx-a6000-48gb",
+    "NVIDIA RTX 6000 Ada Generation": "rtx-6000-ada-48gb",
+    "NVIDIA RTX Pro 6000 Blackwell": "rtx-pro-6000-blackwell-workstation-96gb",
+    "NVIDIA L4": "l4-24gb",
+    "NVIDIA A100 SXM4 40 GB": "a100-sxm4-40gb",
+    "NVIDIA A100 SXM4 80 GB": "a100-sxm4-80gb",
+    "NVIDIA A100 PCIe 40 GB": "a100-pcie-40gb",
+    "NVIDIA A100 PCIe 80 GB": "a100-pcie-80gb",
+    "NVIDIA H100 PCIe": "h100-pcie-80gb",
+    "NVIDIA H100 SXM5 80GB": "h100-sxm5-80gb",
+    "NVIDIA H100 NVL": "h100-nvl-94gb",
+    "NVIDIA GH200": "gh200-96gb",
+    "NVIDIA H200 SXM": "h200-sxm-141gb",
+    "NVIDIA B200": "b200-sxm-180gb",
+    "NVIDIA GB200": "gb200-nvl72",
+    "NVIDIA B300 (Blackwell Ultra)": "b300-sxm",
+    "NVIDIA GB300 (Blackwell Ultra)": "gb300-nvl72"
+  },
+  "ignore": {
+    "NVIDIA HGX H20": "China export variant, not sold here",
+    "NVIDIA H800 SXM5": "China export variant, not sold here",
+    "NVIDIA A800 SXM": "China export variant, not sold here",
+    "NVIDIA A800 PCIe 40 GB": "China export variant, not sold here",
+    "NVIDIA A800 PCIe 80 GB": "China export variant, not sold here",
+    "NVIDIA L2 PCle": "China export variant, not sold here",
+    "NVIDIA L20 PCle": "China export variant, not sold here",
+    "NVIDIA GH100": "the die, not a product (the H100 cards are in the catalog)",
+    "NVIDIA GeForce RTX 4070": "12 GB consumer card, too small for the models planned",
+    "NVIDIA GeForce RTX 4080": "16 GB consumer card, superseded by the RTX 5080 in the catalog",
+    "NVIDIA L40": "superseded by the L40S in the catalog"
+  }
+}

@@ -1,0 +1,51 @@
+# Daily: compare the GPU catalog with Epoch AI's ML hardware dataset (scripts/sync/epoch.mjs). New NVIDIA cards are
+# written as drafts to data/pending-gpus.json and differing values listed in data/epoch-sync.md, both in one pull
+# request for a person to complete from the NVIDIA datasheets. Nothing changes the planner until merged by hand.
+name: Sync GPU catalog with Epoch AI
+
+on:
+  schedule:
+    - cron: '41 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Compare with Epoch AI
+        id: sync
+        run: |
+          set +e
+          node scripts/sync/epoch.mjs --write --report "$RUNNER_TEMP/epoch.md"
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          # The report without its date line, so an unchanged situation makes no new commit.
+          [ "$code" = 1 ] && sed 1d "$RUNNER_TEMP/epoch.md" > data/epoch-sync.md
+          [ "$code" -le 1 ]
+      # data/report.json is fingerprinted over data/*.json (pending-gpus.json included): recompute it.
+      - name: Ready-made reports
+        if: steps.sync.outputs.code == '1'
+        run: npm run dev:report
+      - name: Pull request
+        if: steps.sync.outputs.code == '1'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: sync/epoch
+          title: 'GPU catalog: new cards or changed values at Epoch AI'
+          commit-message: 'GPU catalog: Epoch AI sync'
+          body-path: ${{ runner.temp }}/epoch.md
+          labels: data, gpus
+          add-paths: |
+            data/pending-gpus.json
+            data/epoch-sync.md
+            data/report.json

@@ -1,0 +1,65 @@
+# Weekly: when vLLM or SGLang has a newer stable release than the compatibility matrix, re-check every cited line of
+# engine code at the new tag (scripts/sync/compat.mjs) and open a pull request with the result. A clean run moves the
+# matrix to the new release; otherwise the pull request is a draft listing the rules a person must verify.
+name: Sync compatibility matrix
+
+on:
+  schedule:
+    - cron: '17 5 * * 1'
+  workflow_dispatch:
+    inputs:
+      vllm:
+        description: vLLM tag to check (default latest)
+        required: false
+      sglang:
+        description: SGLang tag to check (default latest)
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check the latest engine releases
+        id: sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          flags=""
+          [ -n "${{ inputs.vllm }}" ] && flags="$flags --vllm ${{ inputs.vllm }}"
+          [ -n "${{ inputs.sglang }}" ] && flags="$flags --sglang ${{ inputs.sglang }}"
+          node scripts/sync/compat.mjs --report "$RUNNER_TEMP/compat.md" $flags
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if grep -q 'NOT updated' "$RUNNER_TEMP/compat.md" 2>/dev/null; then echo "clean=false" >> "$GITHUB_OUTPUT"; else echo "clean=true" >> "$GITHUB_OUTPUT"; fi
+          [ "$code" -le 1 ]
+      # data/report.json is fingerprinted over data/*.json: recompute it so the tests accept the new matrix.
+      - name: Ready-made reports
+        if: steps.sync.outputs.code == '1'
+        run: npm run dev:report
+      - name: Tests on the updated matrix
+        if: steps.sync.outputs.code == '1' && steps.sync.outputs.clean == 'true'
+        run: npm test
+      - name: Pull request
+        if: steps.sync.outputs.code == '1'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: sync/compat
+          title: 'Compatibility matrix: new vLLM / SGLang release'
+          commit-message: 'Compatibility matrix: re-check engine code at the latest releases'
+          body-path: ${{ runner.temp }}/compat.md
+          draft: ${{ steps.sync.outputs.clean != 'true' }}
+          labels: data, compat
+          add-paths: |
+            data/compat.json
+            data/report.json

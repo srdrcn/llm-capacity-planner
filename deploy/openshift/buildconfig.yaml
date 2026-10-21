@@ -1,0 +1,34 @@
+# Builds the image from the fork with the Containerfile. Start by hand (oc start-build gpu-sizing) or from a
+# webhook on merges, so merged catalog / matrix updates reach the service.
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: gpu-sizing
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/srdrcn/llm-capacity-planner.git
+      ref: main
+    # sourceSecretName: git-credentials      # private repository
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Containerfile
+      # Builds behind a proxy: npm ci needs the registry.
+      # env:
+      #   - name: HTTPS_PROXY
+      #     value: http://proxy.example:3128
+  output:
+    to:
+      kind: ImageStreamTag
+      name: gpu-sizing:latest
+  triggers:
+    - type: ConfigChange
+    - type: GitHub
+      github:
+        secretReference:
+          name: gpu-sizing-webhook
+  resources:
+    limits:
+      memory: 2Gi

@@ -56,7 +56,11 @@
     "dev:report": "node scripts/dev/report.mjs",
     "dev:docs": "node scripts/dev/docs.mjs",
     "dev:update-compat": "node scripts/dev/update-compat.mjs",
-    "dev:screenshots": "node scripts/dev/screenshots.mjs"
+    "dev:screenshots": "node scripts/dev/screenshots.mjs",
+    "build:server": "node scripts/build-server.mjs",
+    "serve": "node scripts/build-server.mjs --run",
+    "sync:epoch": "node scripts/sync/epoch.mjs",
+    "sync:compat": "node scripts/sync/compat.mjs"
   },
   "dependencies": {
     "zod": "^4.6.5"
