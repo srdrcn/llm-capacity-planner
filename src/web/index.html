@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -69,7 +69,7 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
 <body>
 <header>
   <h1>GPU Sizing</h1>
-  <p id="meta">Hugging Face modelinden bellek hesabı: ağırlıklar, KV cache, sabit maliyetler. Hız tahmini yok.</p>
+  <p id="meta">GPU memory for any Hugging Face model: weights, KV cache and fixed costs. No speed estimates.</p>
 </header>
 <main>
   <section class="panel">
@@ -78,14 +78,14 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
         <input name="model" list="models" placeholder="Qwen/Qwen3-32B" required autocomplete="off" spellcheck="false">
         <datalist id="models"></datalist>
       </label>
-      <label>Context (istek başına)
+      <label>Context (per request)
         <input name="tokens" placeholder="model max" spellcheck="false">
       </label>
-      <label>Ortalama istek
+      <label>Typical request
         <input name="typicalTokens" placeholder="context / 2" spellcheck="false">
       </label>
-      <label>Eşzamanlı istek
-        <input name="concurrent" type="number" min="1" placeholder="ör. 32">
+      <label>Concurrent requests
+        <input name="concurrent" type="number" min="1" placeholder="e.g. 32">
       </label>
       <label>Engine
         <select name="engine"><option value="vllm">vLLM</option><option value="sglang">SGLang</option></select>
@@ -93,15 +93,15 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
       <label>KV cache
         <select name="cache"><option value="fp8">FP8</option><option value="auto">Model dtype (BF16)</option></select>
       </label>
-      <label>Varyant klasörü
-        <input name="variant" placeholder="(kök)" spellcheck="false">
+      <label>Variant folder
+        <input name="variant" placeholder="(root)" spellcheck="false">
       </label>
       <div class="checks">
-        <label><input type="checkbox" name="textOnly"> Sadece dil modeli (vision hariç)</label>
-        <label><input type="checkbox" name="refresh"> HF'ten yeniden oku</label>
-        <label><input type="checkbox" id="dc" checked> Sadece datacenter kartları</label>
+        <label><input type="checkbox" name="textOnly"> Language model only (no vision)</label>
+        <label><input type="checkbox" name="refresh"> Re-read from Hugging Face</label>
+        <label><input type="checkbox" id="dc" checked> Datacenter cards only</label>
       </div>
-      <button id="go" type="submit">Hesapla</button>
+      <button id="go" type="submit">Calculate</button>
     </form>
   </section>
   <section id="out"></section>
@@ -115,7 +115,7 @@ const layoutText = (l) => (l.pp > 1 ? `TP${l.tp} × PP${l.pp}` : `TP${l.tp}`);
 
 fetch('api/meta').then((r) => r.json()).then((m) => {
   const eng = m.engines.map((e) => `${e.engine} ${e.version}`).join(', ');
-  $('#meta').textContent = `Hugging Face modelinden bellek hesabı. Uyumluluk: ${eng} (kontrol ${m.compatCheckedOn}) · GPU kataloğu ${m.hardwareCheckedOn}` + (m.hfToken ? '' : ' · HF token yok: gated modeller okunamaz');
+  $('#meta').textContent = `GPU memory for any Hugging Face model. Compatibility: ${eng} (checked ${m.compatCheckedOn}) · GPU catalog ${m.hardwareCheckedOn}` + (m.hfToken ? '' : ' · no HF token: gated models cannot be read');
   if (m.builtinModels) $('#models').innerHTML = m.builtinModels.repos.map((r) => `<option value="${esc(r)}">`).join('');
 }).catch(() => {});
 
@@ -124,14 +124,14 @@ function bar(l) {
   const fixed = (l.fixedGiB[0] + l.fixedGiB[1]) / 2;
   const used = l.weightsGiB + fixed + l.kvPerRequestGiB;
   const pct = (x) => Math.max(0, Math.min(100, (x / Math.max(total, used)) * 100)).toFixed(1) + '%';
-  return `<div class="bar" title="ağırlık ${gib(l.weightsGiB)} · sabit ${gib(fixed)} · 1 tam istek KV ${gib(l.kvPerRequestGiB)} / engine payı ${gib(total)} GiB">
+  return `<div class="bar" title="weights ${gib(l.weightsGiB)} · fixed ${gib(fixed)} · KV of 1 full request ${gib(l.kvPerRequestGiB)} / engine share ${gib(total)} GiB">
     <span style="width:${pct(l.weightsGiB)};background:var(--w)"></span><span style="width:${pct(fixed)};background:var(--f)"></span><span style="width:${pct(l.kvPerRequestGiB)};background:var(--k)"></span></div>`;
 }
 
 function notes(l) {
   const n = [...l.compat.notes];
-  if (l.pipeline) n.push('Pipeline parallelism bu model için doğrulanmadı.');
-  return n.length ? `<details class="nt"><summary><span class="tag warn">${n.length} uyarı</span></summary><ul class="notes">${n.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></details>` : '';
+  if (l.pipeline) n.push('Pipeline parallelism is not verified for this model.');
+  return n.length ? `<details class="nt"><summary><span class="tag warn">${n.length} ${n.length === 1 ? 'warning' : 'warnings'}</span></summary><ul class="notes">${n.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></details>` : '';
 }
 
 let last;
@@ -142,11 +142,11 @@ function render(p) {
   const shown = $('#dc').checked ? p.cards.filter((c) => c.segment === 'datacenter') : p.cards;
   const fits = shown.filter((c) => (load ? c.forLoad : c.minimal));
   const rest = shown.filter((c) => !(load ? c.forLoad : c.minimal));
-  const src = m.source.kind === 'built-in' ? `yerleşik veri (${m.source.date})` : m.source.kind === 'network' ? 'Hugging Face (canlı)' : 'önbellek';
+  const src = m.source.kind === 'built-in' ? `built-in data (${m.source.date})` : m.source.kind === 'network' ? 'Hugging Face (live)' : 'cache';
   const rows = fits.map((c, i) => {
     const l = load ? c.forLoad.layout : c.minimal;
-        return `<tr class="${i === 0 ? 'best' : ''}">
-      <td><b>${esc(c.gpu)}</b><div class="muted small">${gib(c.cardGiB)} GiB · sunucuda ${c.serverGpus}</div>${notes(l)}</td>
+    return `<tr class="${i === 0 ? 'best' : ''}">
+      <td><b>${esc(c.gpu)}</b><div class="muted small">${gib(c.cardGiB)} GiB · ${c.serverGpus} per server</div>${notes(l)}</td>
       <td>${l.gpusPerCopy}× <span class="muted">${layoutText(l)}</span>${bar(l)}</td>
       <td class="num">${gib(l.weightsGiB)}</td>
       <td class="num hide-sm">${gib(l.kvPerRequestGiB)}</td>
@@ -159,25 +159,25 @@ function render(p) {
   <div class="panel">
     <div class="head"><h2>${esc(m.repo)}${m.variant ? ' / ' + esc(m.variant) : ''}</h2><span class="muted small">${src}</span></div>
     <div class="facts">
-      <span>Format <b>${esc(m.format)}</b></span><span>Mimari <b>${esc(m.family)}</b></span>
+      <span>Format <b>${esc(m.format)}</b></span><span>Architecture <b>${esc(m.family)}</b></span>
       <span>Context <b>${ktok(m.workload.maxContext)}</b>${m.modelMaxContext ? ` <span class="muted">(model max ${ktok(m.modelMaxContext)})</span>` : ''}</span>
-      <span>Ortalama istek <b>${ktok(m.workload.typicalContext)}</b></span>
+      <span>Typical request <b>${ktok(m.workload.typicalContext)}</b></span>
       <span>Engine <b>${esc(m.engine)}</b></span><span>KV <b>${esc(m.cache)}</b></span>
-      ${load ? `<span>Eşzamanlı istek <b>${p.concurrent}</b></span>` : ''}
-      ${m.hasVision && !m.textOnly ? '<span class="muted">vision encoder dahil</span>' : ''}
-      ${m.compatChecked ? '' : '<span class="tag warn">uyumluluk matrisinde yok</span>'}
+      ${load ? `<span>Concurrent requests <b>${p.concurrent}</b></span>` : ''}
+      ${m.hasVision && !m.textOnly ? '<span class="muted">vision encoder included</span>' : ''}
+      ${m.compatChecked ? '' : '<span class="tag warn">not in the compatibility matrix</span>'}
     </div>
   </div>
   <div class="panel">
-    <div class="head"><h2>${load ? `${p.concurrent} eşzamanlı istek için` : 'Modelin sığdığı en küçük düzen'}</h2>
-      <div class="legend"><span><i style="background:var(--w)"></i>ağırlık</span><span><i style="background:var(--f)"></i>sabit maliyet</span><span><i style="background:var(--k)"></i>1 tam istek KV</span></div></div>
+    <div class="head"><h2>${load ? `For ${p.concurrent} concurrent requests` : 'Smallest layout the model fits'}</h2>
+      <div class="legend"><span><i style="background:var(--w)"></i>weights</span><span><i style="background:var(--f)"></i>fixed costs</span><span><i style="background:var(--k)"></i>KV of 1 full request</span></div></div>
     ${fits.length ? `<div class="scroll"><table>
-      <thead><tr><th>Kart</th><th>Kopya başına</th><th class="num">Ağırlık/GPU</th><th class="num hide-sm">KV/istek/GPU</th><th class="num hide-sm">Sabit/GPU</th><th class="num">İstek/kopya</th>
-      ${load ? '<th class="num">Kopya</th><th class="num">GPU</th><th class="num">Sunucu</th>' : ''}</tr></thead>
+      <thead><tr><th>Card</th><th>Per copy</th><th class="num">Weights/GPU</th><th class="num hide-sm">KV/request/GPU</th><th class="num hide-sm">Fixed/GPU</th><th class="num">Requests/copy</th>
+      ${load ? '<th class="num">Copies</th><th class="num">GPUs</th><th class="num">Servers</th>' : ''}</tr></thead>
       <tbody>${rows}</tbody></table></div>
-      <p class="muted small">GiB, GPU başına. "İstek/kopya": ortalama istek uzunluğunda KV cache'e aynı anda sığan istek sayısı (%${Math.round(m.workload.safety * 100)} güvenlik payıyla). Bellek hesabıdır; hız ve gecikme ayrıca benchmark ister.</p>`
-      : '<p class="err">Bu model hiçbir kartta tek sunucuya sığmıyor.</p>'}
-    ${rest.length ? `<details><summary>Sığmayan / başlamayan kartlar (${rest.length})</summary><ul class="small">${rest.map((c) => `<li><b>${esc(c.gpu)}</b>: <span class="muted">${esc(c.reason ?? 'sığmıyor')}</span></li>`).join('')}</ul></details>` : ''}
+      <p class="muted small">GiB per GPU. "Requests/copy": requests of the typical length whose KV cache fits at once, with an ${Math.round(m.workload.safety * 100)}% safety margin. Memory only: speed and latency need a benchmark.</p>`
+      : '<p class="err">This model does not fit in one server of any card.</p>'}
+    ${rest.length ? `<details><summary>Cards that do not fit or start (${rest.length})</summary><ul class="small">${rest.map((c) => `<li><b>${esc(c.gpu)}</b>: <span class="muted">${esc(c.reason ?? 'does not fit')}</span></li>`).join('')}</ul></details>` : ''}
   </div>`;
 }
 
@@ -188,7 +188,7 @@ $('#f').addEventListener('submit', async (e) => {
   const body = { model: fd.get('model').trim(), engine: fd.get('engine'), cache: fd.get('cache'), textOnly: fd.get('textOnly') === 'on', refresh: fd.get('refresh') === 'on' };
   for (const k of ['tokens', 'typicalTokens', 'variant']) { const v = fd.get(k).trim(); if (v) body[k] = v; }
   const c = Number(fd.get('concurrent')); if (c > 0) body.concurrent = Math.round(c);
-  const btn = $('#go'); btn.disabled = true; btn.textContent = 'Hesaplanıyor…';
+  const btn = $('#go'); btn.disabled = true; btn.textContent = 'Calculating…';
   try {
     const r = await fetch('api/plan', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
     const j = await r.json();
@@ -196,7 +196,7 @@ $('#f').addEventListener('submit', async (e) => {
     else render(j);
   } catch (err) {
     $('#out').innerHTML = `<div class="panel err">${esc(err.message)}</div>`;
-  } finally { btn.disabled = false; btn.textContent = 'Hesapla'; }
+  } finally { btn.disabled = false; btn.textContent = 'Calculate'; }
 });
 </script>
 </body>
