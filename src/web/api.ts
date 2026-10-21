@@ -5,7 +5,11 @@
  */
 import { z } from 'zod';
 import { USAGE } from '../cli/args';
+import { documentedMaxTokens } from '../cli/compat';
+import { cachedFetch, defaultCacheDir } from '../cli/http-cache';
 import { catalog, runPlan, type PlanDeps } from '../cli/run';
+import { HubClient } from '../hub/client';
+import { factsFromHfConfig } from '../model/hf-config';
 import type { Gpu } from '../planner/hardware';
 import { memoryAnswer, type MemoryAnswer } from './summary';
 
@@ -77,4 +81,43 @@ export async function plan(body: unknown, deps: Omit<PlanDeps, 'out' | 'writeFil
     return { ok: false, status: code === 2 ? 404 : 422, message };
   }
   return { ok: true, plan: memoryAnswer(JSON.parse(written), gpus, r.concurrent) };
+}
+
+/** What the page shows as soon as a model id is typed: how long a request the model takes. */
+export interface ModelInfo {
+  repo: string;
+  /** config.json's max_position_embeddings (or n_positions / seq_length): the context the engine allows by default. */
+  contextLength: number | null;
+  /** A longer context the model card documents (YaRN / rope scaling, catalog models only), e.g. 1M. */
+  documentedMaxContext: number | null;
+  architecture: string | null;
+  vision: boolean;
+}
+
+export type ModelInfoResult = { ok: true; info: ModelInfo } | { ok: false; status: number; message: string };
+
+const REPO_ID = /^[\w.-]+\/[\w.-]+$/;
+
+/** config.json of a repo (or of a variant folder), read as the planner reads it: built-in data first, then the cached hub. */
+export async function modelInfo(repo: string, variant: string, deps: Pick<PlanDeps, 'fetch' | 'env' | 'baseUrl' | 'cacheDir' | 'platform' | 'builtin'>): Promise<ModelInfoResult> {
+  if (!REPO_ID.test(repo)) return { ok: false, status: 400, message: `"${repo}" is not a Hugging Face repo id (owner/name)` };
+  if (variant.split('/').some((p) => p === '..')) return { ok: false, status: 400, message: 'bad variant folder' };
+  const builtin = deps.builtin?.has(repo, 'main') ? deps.builtin : undefined;
+  const fetchFn = builtin ? builtin.fetch : cachedFetch(deps.fetch, { dir: deps.cacheDir ?? defaultCacheDir(deps.env, deps.platform) });
+  const token = deps.env.HF_TOKEN ?? deps.env.HUGGING_FACE_HUB_TOKEN;
+  const hub = new HubClient({ fetch: fetchFn, baseUrl: deps.baseUrl, getToken: () => token });
+  try {
+    const config = await hub.json(repo, variant ? `${variant}/config.json` : 'config.json');
+    const facts = factsFromHfConfig(config);
+    return {
+      ok: true,
+      info: { repo, contextLength: facts.contextLength ?? null, documentedMaxContext: documentedMaxTokens(repo) ?? null, architecture: facts.architecture ?? null, vision: facts.vision === true },
+    };
+  } catch (e) {
+    const code = (e as { code?: unknown }).code;
+    const message = (e as Error).message;
+    if (code === 'HF_NOT_FOUND' || code === 'HF_AUTH_REQUIRED') return { ok: false, status: 404, message: `${repo}: no config.json found (${message})` };
+    if (code === 'HF_GATED') return { ok: false, status: 403, message: `${repo} is gated: accept its license on huggingface.co and set HF_TOKEN` };
+    return { ok: false, status: 502, message };
+  }
 }

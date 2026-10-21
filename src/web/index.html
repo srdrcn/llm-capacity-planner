@@ -56,6 +56,12 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
 .nt summary { list-style: none; margin-top: 3px; } .nt summary::-webkit-details-marker { display: none; }
 .notes { max-width: 520px; margin: 4px 0 0; padding-left: 16px; color: var(--warn); font-size: 12px; }
 .scroll { overflow-x: auto; }
+.ctx { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: 13px; color: var(--muted); min-height: 22px; margin-top: -4px; }
+.ctx b { color: var(--ink); font-weight: 600; }
+.chip { font: inherit; font-size: 12px; font-weight: 500; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; cursor: pointer; grid-column: auto; }
+.chip:hover { border-color: var(--accent); }
+.chip.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.ctx .warn { color: var(--warn); }
 .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
 @media (max-width: 760px) {
   td:first-child { min-width: 112px; }
@@ -87,6 +93,7 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
       <label>Concurrent requests
         <input name="concurrent" type="number" min="1" placeholder="e.g. 32">
       </label>
+      <div class="ctx" id="ctx" aria-live="polite"></div>
       <label>Engine
         <select name="engine"><option value="vllm">vLLM</option><option value="sglang">SGLang</option></select>
       </label>
@@ -110,7 +117,10 @@ details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const gib = (n) => (n >= 100 ? n.toFixed(0) : n.toFixed(1));
-const ktok = (n) => (n >= 1048576 && n % 1048576 === 0 ? n / 1048576 + 'M' : n >= 1024 ? Math.round(n / 1024) + 'k' : String(n));
+// Tokens as people write them: 131072 → 128k, 1048576 → 1M, and decimal round figures (1,000,000 → 1M) too.
+const ktok = (n) => (n >= 1048576 && n % 1048576 === 0 ? n / 1048576 + 'M' : n >= 1e6 && n % 1e6 === 0 ? n / 1e6 + 'M' : n >= 1024 ? Math.round(n / 1024) + 'k' : String(n));
+// What a chip types: the short form when it reads back exactly, otherwise the plain number.
+const tokArg = (n) => (ctxTokens(ktok(n)) === n ? ktok(n) : String(n));
 const layoutText = (l) => (l.pp > 1 ? `TP${l.tp} × PP${l.pp}` : `TP${l.tp}`);
 
 fetch('api/meta').then((r) => r.json()).then((m) => {
@@ -133,6 +143,61 @@ function notes(l) {
   if (l.pipeline) n.push('Pipeline parallelism is not verified for this model.');
   return n.length ? `<details class="nt"><summary><span class="tag warn">${n.length} ${n.length === 1 ? 'warning' : 'warnings'}</span></summary><ul class="notes">${n.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></details>` : '';
 }
+
+// The model's context, read from its config.json as soon as a repo id is typed.
+let info;
+const REPO = /^[\w.-]+\/[\w.-]+$/;
+function ctxTokens(v) {
+  const m = /^(\d+(?:\.\d+)?)([kKmM]?)$/.exec(String(v).trim());
+  return m ? Math.round(Number(m[1]) * (m[2] === '' ? 1 : /k/i.test(m[2]) ? 1024 : 1048576)) : null;
+}
+function showCtx() {
+  const el = $('#ctx');
+  if (!info) { el.innerHTML = ''; return; }
+  if (info.error) { el.innerHTML = `<span class="warn">${esc(info.error)}</span>`; return; }
+  const max = info.contextLength;
+  const doc = info.documentedMaxContext && info.documentedMaxContext > (max ?? 0) ? info.documentedMaxContext : null;
+  const tokensInput = $('input[name=tokens]');
+  const cur = ctxTokens(tokensInput.value);
+  const picks = [8192, 32768, 131072].filter((n) => !max || n < max);
+  if (max) picks.push(max);
+  if (doc) picks.push(doc);
+  const chip = (n) => `<button type="button" class="chip${cur === n ? ' on' : ''}" data-t="${tokArg(n)}">${ktok(n)}${n === max ? ' (max)' : n === doc ? ' (YaRN)' : ''}</button>`;
+  const over = cur && max && cur > (doc ?? max);
+  el.innerHTML = max
+    ? `Model context: <b>${ktok(max)}</b>${doc ? ` · up to <b>${ktok(doc)}</b> with rope scaling (model card)` : ''} ${picks.map(chip).join('')}${over ? `<span class="warn">above what the model supports</span>` : ''}`
+    : '<span>config.json gives no context length: enter one.</span>';
+  tokensInput.placeholder = max ? `${ktok(max)} (model max)` : 'required';
+}
+let infoFor = '';
+async function loadInfo() {
+  const repo = $('input[name=model]').value.trim();
+  const variant = $('input[name=variant]').value.trim();
+  const key = repo + '|' + variant;
+  if (key === infoFor) return;
+  infoFor = key;
+  if (!REPO.test(repo)) { info = undefined; showCtx(); return; }
+  $('#ctx').textContent = 'Reading config.json…';
+  try {
+    const r = await fetch(`api/model?repo=${encodeURIComponent(repo)}&variant=${encodeURIComponent(variant)}`);
+    const j = await r.json();
+    if (infoFor !== key) return;
+    info = r.ok ? j : { error: j.error };
+  } catch (e) { info = { error: e.message }; }
+  showCtx();
+}
+let timer;
+for (const n of ['model', 'variant']) {
+  $(`input[name=${n}]`).addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(loadInfo, 600); });
+  $(`input[name=${n}]`).addEventListener('change', loadInfo);
+}
+$('input[name=tokens]').addEventListener('input', showCtx);
+$('#ctx').addEventListener('click', (e) => {
+  const t = e.target.closest('.chip');
+  if (!t) return;
+  $('input[name=tokens]').value = t.dataset.t;
+  showCtx();
+});
 
 let last;
 function render(p) {
