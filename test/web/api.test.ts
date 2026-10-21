@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from 'vitest';
 import { catalog } from '../../src/cli/run';
 import { figuresSchema, type Figures } from '../../src/cli/figures';
-import { plan, planArgs, planRequestSchema } from '../../src/web/api';
+import { modelInfo, plan, planArgs, planRequestSchema } from '../../src/web/api';
 import { cardSizing, memoryAnswer, memoryLayout } from '../../src/web/summary';
 import { catalogBuiltin, HUB, noNetwork, runCli, tempFolder } from '../helpers/catalog';
 import { fakeHub } from '../cli/fixtures';
@@ -116,5 +116,38 @@ describe('memory layouts', async () => {
   it('orders cards that fit before those that do not', () => {
     const a = memoryAnswer({ ...json, rows: rows.filter((r) => r.gpuId === h200.id) }, [GPUS[0]!, h200]);
     expect(a.cards.map((c) => c.gpuId)).toEqual([h200.id, GPUS[0]!.id]);
+  });
+});
+
+describe('model info', () => {
+  const hub = (status: number, body: unknown = {}, headers: Record<string, string> = {}) =>
+    (() => Promise.resolve(new Response(JSON.stringify(body), { status, headers }))) as unknown as typeof fetch;
+  const live = (f: typeof globalThis.fetch) => deps({ fetch: f, builtin: undefined });
+
+  it('reads the context of a built-in model and its documented maximum', async () => {
+    const r = await modelInfo(MODEL, '', deps());
+    expect(r).toMatchObject({ ok: true, info: { repo: MODEL, contextLength: 262144, documentedMaxContext: 1_000_000, vision: true } });
+  });
+
+  it('reads config.json from the hub, in a variant folder too', async () => {
+    const seen: string[] = [];
+    const fetch = ((url: string) => {
+      seen.push(String(url));
+      return Promise.resolve(new Response(JSON.stringify({ architectures: ['X'], max_position_embeddings: 32768 }), { status: 200 }));
+    }) as unknown as typeof globalThis.fetch;
+    const r = await modelInfo('someone/model', 'fp8', { ...live(fetch), env: { HF_TOKEN: 'x' } });
+    expect(r).toEqual({ ok: true, info: { repo: 'someone/model', contextLength: 32768, documentedMaxContext: null, architecture: 'X', vision: false } });
+    expect(seen[0]).toMatch(/someone\/model\/resolve\/main\/fp8\/config\.json$/);
+    // Without a cache folder of its own it uses the command's (here a temporary one, through its variable).
+    const bare = await modelInfo('someone/other', '', { ...live(hub(200, {})), cacheDir: undefined, env: { CAPACITY_PLANNER_CACHE: tmp.dir } });
+    expect(bare).toMatchObject({ ok: true, info: { contextLength: null, architecture: null } });
+  });
+
+  it('answers 400, 403, 404 and 502 with a message', async () => {
+    expect(await modelInfo('bad', '', deps())).toMatchObject({ ok: false, status: 400 });
+    expect(await modelInfo('a/b', '../x', deps())).toMatchObject({ ok: false, status: 400 });
+    expect(await modelInfo('a/missing', '', live(hub(404)))).toMatchObject({ ok: false, status: 404 });
+    expect(await modelInfo('a/gated', '', live(hub(403, {}, { 'x-error-code': 'GatedRepo' })))).toMatchObject({ ok: false, status: 403 });
+    expect(await modelInfo('a/down', '', live(noNetwork))).toMatchObject({ ok: false, status: 502 });
   });
 });

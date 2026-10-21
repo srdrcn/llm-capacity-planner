@@ -4,6 +4,7 @@
  *   GET  /              the page (src/web/index.html)
  *   GET  /api/meta      engine versions, catalog dates, built-in models
  *   GET  /api/gpus      the GPU catalog (data/hardware.json)
+ *   GET  /api/model     ?repo=owner/name[&variant=dir]: the model's context length, before planning
  *   POST /api/plan      memory sizing of a Hugging Face model (src/web/api.ts planRequestSchema)
  *   GET  /healthz       liveness / readiness
  *
@@ -20,7 +21,7 @@ import hardwareJson from '../data/hardware.json';
 import { builtinModels, readPack, type BuiltinModels } from './cli/builtin';
 import { findHfToken } from './cli/hf-token';
 import { catalog } from './cli/run';
-import { plan, type PlanResult } from './web/api';
+import { modelInfo, plan, type PlanResult } from './web/api';
 import page from './web/index.html';
 
 const env = process.env;
@@ -123,6 +124,10 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> 
   if (req.method === 'GET' && url.pathname === '/healthz') return send(res, 200, { ok: true });
   if (req.method === 'GET' && url.pathname === '/api/meta') return send(res, 200, meta);
   if (req.method === 'GET' && url.pathname === '/api/gpus') return send(res, 200, gpuList);
+  if (req.method === 'GET' && url.pathname === '/api/model') {
+    const r = await modelInfo((url.searchParams.get('repo') ?? '').trim(), (url.searchParams.get('variant') ?? '').trim(), deps);
+    return r.ok ? send(res, 200, r.info) : send(res, r.status, { error: r.message });
+  }
   if (url.pathname === '/api/plan') {
     if (req.method !== 'POST') return send(res, 405, { error: 'use POST' });
     let body: unknown;

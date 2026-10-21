@@ -6,7 +6,8 @@ The planning engine (weights, KV cache, compatibility matrix) is unchanged.
 ## 1. Web service (`src/server.ts`, `src/web/`)
 
 Memory-only sizing for any Hugging Face model id: weights, KV cache and fixed costs per GPU. For every card it gives the
-smallest layout (TP / PP) the model fits; given a number of concurrent requests, it adds how many copies of the
+smallest layout (TP / PP) the model fits. As soon as a model id is typed, the page shows its context length (and any
+longer one reached with rope scaling) with quick picks for the context field; given a number of concurrent requests, it adds how many copies of the
 model, GPUs and servers they take. Speed, time to first token and user counts are deliberately not shown; they stay in
 the CLI's output.
 
@@ -19,6 +20,7 @@ npm run serve                  # http://localhost:8080
 | --- | --- |
 | `GET /` | the page |
 | `POST /api/plan` | `{"model":"Qwen/Qwen3-32B","tokens":"128k","typicalTokens":"32k","concurrent":64,"engine":"vllm","cache":"fp8"}` |
+| `GET /api/model?repo=owner/name` | the model's context length from its `config.json` (and a longer one its model card documents), before planning |
 | `GET /api/gpus` | the GPU catalog |
 | `GET /api/meta` | engine versions, catalog dates, built-in models |
 | `GET /healthz` | probe |
