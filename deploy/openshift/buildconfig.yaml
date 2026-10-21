@@ -8,7 +8,7 @@ spec:
   source:
     type: Git
     git:
-      uri: https://github.com/CHANGE-ME/llm-capacity-planner.git
+      uri: https://github.com/srdrcn/llm-capacity-planner.git
       ref: main
     # sourceSecretName: git-credentials      # private repository
   strategy:
