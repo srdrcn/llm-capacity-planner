@@ -1,0 +1,1580 @@
+{
+  "$comment": "Drafts of NVIDIA cards Epoch AI lists and hardware.json does not (scripts/sync/epoch.mjs). Not used by the planner: complete each from the NVIDIA datasheet, move it to hardware.json, or add its Epoch name to epoch-map.json \"ignore\".",
+  "gpus": [
+    {
+      "id": "vr200-vera-rubin",
+      "name": "NVIDIA VR200 (Vera Rubin)",
+      "epoch": {
+        "releaseDate": "2026-09-30",
+        "lastModified": "2026-10-21 00:02:33+00:00",
+        "vramGB": 288,
+        "memoryBandwidthGBs": 19200,
+        "tflops": {
+          "bf16": 4000,
+          "fp8": 17500,
+          "fp4": 35000
+        },
+        "intranodeGBs": null,
+        "tdpW": null,
+        "datasheet": "https://nvdam.widen.net/s/7hztspzswk/gpu-architecture-datasheet-vera-rubin-nvidia-us-5198950-web\nhttps://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/\nhttps://dam-cdn.nvd.orangelogic.com/AssetLink/56p68o47y6f1yucpubl0ump1c0aif422.pdf\nhttps://www.nvidia.com/en-us/data-center/nvlink/"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-rtx-3090-ti",
+      "name": "NVIDIA GeForce RTX 3090 Ti",
+      "epoch": {
+        "releaseDate": "2022-03-29",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 1008,
+        "tflops": {
+          "bf16": 160,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 450,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-rtx-3090-ti.c3829"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "rtx-a4000",
+      "name": "NVIDIA RTX A4000",
+      "epoch": {
+        "releaseDate": "2021-04-12",
+        "lastModified": "2025-07-21 09:21:30+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 448,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 140,
+        "datasheet": "techpowerup.com/gpu-specs/rtx-a4000.c3756"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "a10g",
+      "name": "NVIDIA A10G",
+      "epoch": {
+        "releaseDate": "2021-04-12",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 600,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 150,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/a10g.c3798"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "rtx-a5000",
+      "name": "NVIDIA RTX A5000",
+      "epoch": {
+        "releaseDate": "2021-04-12",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 768,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 230,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/rtx-a5000.c3748"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "a10-pcie",
+      "name": "NVIDIA A10 PCIe",
+      "epoch": {
+        "releaseDate": "2021-04-12",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 600,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 150,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/a10-pcie.c3793#:~:text=The%20A10%20PCIe%20is%20a,card%20supports%20DirectX%2012%20Ultimate."
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "a40-pcie",
+      "name": "NVIDIA A40 PCIe",
+      "epoch": {
+        "releaseDate": "2020-10-05",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 48,
+        "memoryBandwidthGBs": 696,
+        "tflops": {
+          "bf16": 149.7,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 300,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/a40-pcie.c3700; https://images.nvidia.com/content/Solutions/data-center/a40/nvidia-a40-datasheet.pdf"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-rtx-3080",
+      "name": "NVIDIA GeForce RTX 3080",
+      "epoch": {
+        "releaseDate": "2020-09-01",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 10,
+        "memoryBandwidthGBs": 760,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 320,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-rtx-3080.c3621"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "a100-pcie",
+      "name": "NVIDIA A100 PCIe",
+      "epoch": {
+        "releaseDate": "2020-06-22",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 40,
+        "memoryBandwidthGBs": 1940,
+        "tflops": {
+          "bf16": 312,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 600,
+        "tdpW": 300,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/a100-pcie-80-gb.c3821\nhttps://www.techpowerup.com/gpu-specs/a100-pcie-40-gb.c3623"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "a100",
+      "name": "NVIDIA A100",
+      "epoch": {
+        "releaseDate": "2020-03-01",
+        "lastModified": "2026-08-04 19:59:50+00:00",
+        "vramGB": 40,
+        "memoryBandwidthGBs": 1560,
+        "tflops": {
+          "bf16": 312,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 600,
+        "tdpW": 400,
+        "datasheet": "https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/a100/pdf/nvidia-a100-datasheet-us-nvidia-1758950-r4-web.pdf; https://www.techpowerup.com/gpu-specs/a100-sxm4-80-gb.c3746"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100s-pcie-32-gb",
+      "name": "NVIDIA Tesla V100S PCIe 32 GB",
+      "epoch": {
+        "releaseDate": "2019-11-26",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 32,
+        "memoryBandwidthGBs": 1130,
+        "tflops": {
+          "bf16": 130,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 32,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100s-pcie-32-gb.c3467"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-rtx-4000",
+      "name": "NVIDIA Quadro RTX 4000",
+      "epoch": {
+        "releaseDate": "2018-11-13",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 8,
+        "memoryBandwidthGBs": 416,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 160,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-rtx-4000.c3336"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-rtx-2080-ti-11gb",
+      "name": "NVIDIA GeForce RTX 2080 Ti 11GB",
+      "epoch": {
+        "releaseDate": "2018-09-20",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 11,
+        "memoryBandwidthGBs": 616,
+        "tflops": {
+          "bf16": 113.8,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-rtx-2080-ti.c3305"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-t4",
+      "name": "NVIDIA Tesla T4",
+      "epoch": {
+        "releaseDate": "2018-09-13",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 320,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 70,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-t4.c3316"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-rtx-6000",
+      "name": "NVIDIA Quadro RTX 6000",
+      "epoch": {
+        "releaseDate": "2018-08-13",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 672,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 260,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-rtx-6000.c3307"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-rtx-5000",
+      "name": "NVIDIA Quadro RTX 5000",
+      "epoch": {
+        "releaseDate": "2018-08-13",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 448,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 230,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-rtx-5000.c3308"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-rtx-8000",
+      "name": "NVIDIA Quadro RTX 8000",
+      "epoch": {
+        "releaseDate": "2018-08-13",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 48,
+        "memoryBandwidthGBs": 672,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 260,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-rtx-8000.c3306"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-dgxs-16-gb",
+      "name": "NVIDIA Tesla V100 DGXS 16 GB",
+      "epoch": {
+        "releaseDate": "2018-03-27",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 897,
+        "tflops": {
+          "bf16": 125,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 300,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100-dgxs-16-gb.c3763"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-pcie-32-gb",
+      "name": "NVIDIA Tesla V100 PCIe 32 GB",
+      "epoch": {
+        "releaseDate": "2018-03-27",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 32,
+        "memoryBandwidthGBs": 897,
+        "tflops": {
+          "bf16": 112,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 32,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100-pcie-32-gb.c3184"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-dgxs-32-gb",
+      "name": "NVIDIA Tesla V100 DGXS 32 GB",
+      "epoch": {
+        "releaseDate": "2018-03-27",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 32,
+        "memoryBandwidthGBs": 897,
+        "tflops": {
+          "bf16": 125,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 300,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100-dgxs-32-gb.c3186"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-sxm3-32-gb",
+      "name": "NVIDIA Tesla V100 SXM3 32 GB",
+      "epoch": {
+        "releaseDate": "2018-03-27",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": 898,
+        "tflops": {
+          "bf16": 125,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 300,
+        "tdpW": 300,
+        "datasheet": null
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-sxm2-32-gb",
+      "name": "NVIDIA Tesla V100 SXM2 32 GB",
+      "epoch": {
+        "releaseDate": "2018-03-27",
+        "lastModified": "2025-10-29 21:57:06+00:00",
+        "vramGB": 32,
+        "memoryBandwidthGBs": 898,
+        "tflops": {
+          "bf16": 125,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 300,
+        "tdpW": 300,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100-sxm2-32-gb.c3185"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "titan-v",
+      "name": "NVIDIA Titan V",
+      "epoch": {
+        "releaseDate": "2017-12-01",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 12,
+        "memoryBandwidthGBs": 651,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/titan-v.c3051"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-sxm2",
+      "name": "NVIDIA Tesla V100 SXM2",
+      "epoch": {
+        "releaseDate": "2017-07-01",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 897,
+        "tflops": {
+          "bf16": 125,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 300,
+        "tdpW": 300,
+        "datasheet": "https://images.nvidia.com/content/technologies/volta/pdf/437317-Volta-V100-DS-NV-US-WEB.pdf\nhttps://www.techpowerup.com/gpu-specs/tesla-v100-sxm2-16-gb.c3018\nhttps://images.nvidia.com/content/technologies/volta/pdf/volta-v100-datasheet-update-us-1165301-r5.pdf"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-sxm2-16-gb",
+      "name": "NVIDIA Tesla V100 SXM2 16 GB",
+      "epoch": {
+        "releaseDate": "2017-06-21",
+        "lastModified": "2025-10-29 21:57:01+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": 897,
+        "tflops": {
+          "bf16": 125,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 300,
+        "tdpW": 300,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100-sxm2-16-gb.c3018"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-v100-pcie-16-gb",
+      "name": "NVIDIA Tesla V100 PCIe 16 GB",
+      "epoch": {
+        "releaseDate": "2017-06-21",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 897,
+        "tflops": {
+          "bf16": 112,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 32,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100-pcie-16-gb.c2957"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "v100",
+      "name": "NVIDIA V100",
+      "epoch": {
+        "releaseDate": "2017-06-21",
+        "lastModified": "2026-03-18 18:59:50+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": 897,
+        "tflops": {
+          "bf16": 125,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": 300,
+        "tdpW": 300,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-v100-pcie-16-gb.c2957\nhttps://www.techpowerup.com/gpu-specs/tesla-v100-pcie-32-gb.c3184\nhttps://www.techpowerup.com/gpu-specs/tesla-v100-sxm2-16-gb.c3471\nhttps://www.techpowerup.com/gpu-specs/tesla-v100-sxm2-16-gb.c3018\nhttps://www.techpowerup.com/gpu-specs/tesla-v100-sxm2-32-gb.c3185\nhttps://www.techpowerup.com/gpu-specs/tesla-v100-sxm3-32-gb.c3472\nhttps://www.techpowerup.com/gpu-specs/tesla-v100s-pcie-32-gb.c3467"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "titan-xp",
+      "name": "NVIDIA TITAN Xp",
+      "epoch": {
+        "releaseDate": "2017-04-06",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 12,
+        "memoryBandwidthGBs": 548,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/titan-xp.c2948"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-1080-ti",
+      "name": "NVIDIA GeForce GTX 1080 Ti",
+      "epoch": {
+        "releaseDate": "2017-03-10",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 11,
+        "memoryBandwidthGBs": 484,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-1080-ti.c2877"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-p600",
+      "name": "NVIDIA Quadro P600",
+      "epoch": {
+        "releaseDate": "2017-02-07",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 2,
+        "memoryBandwidthGBs": 64,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 40,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-p600.c2933"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-p4000",
+      "name": "NVIDIA Quadro P4000",
+      "epoch": {
+        "releaseDate": "2017-02-06",
+        "lastModified": "2025-07-21 09:55:58+00:00",
+        "vramGB": 8,
+        "memoryBandwidthGBs": 243,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 105,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-p4000.c2930"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-p5000",
+      "name": "NVIDIA Quadro P5000",
+      "epoch": {
+        "releaseDate": "2016-10-01",
+        "lastModified": "2025-07-21 09:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 288,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 180,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-p5000.c2864"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-p6000",
+      "name": "NVIDIA Quadro P6000",
+      "epoch": {
+        "releaseDate": "2016-10-01",
+        "lastModified": "2025-07-21 09:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 433,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-p6000.c2865"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "p40",
+      "name": "NVIDIA P40",
+      "epoch": {
+        "releaseDate": "2016-09-13",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 694,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-p40.c2878"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-p4",
+      "name": "NVIDIA Tesla P4",
+      "epoch": {
+        "releaseDate": "2016-09-13",
+        "lastModified": "2025-07-21 09:56:20+00:00",
+        "vramGB": 8,
+        "memoryBandwidthGBs": 192,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 75,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-p4.c2879"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-p100-pcie-16gb",
+      "name": "NVIDIA Tesla P100 PCIe 16GB",
+      "epoch": {
+        "releaseDate": "2016-06-20",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": 732,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-p100-pcie-16-gb.c2888"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-p100-pcie-12gb",
+      "name": "NVIDIA Tesla P100 PCIe 12GB",
+      "epoch": {
+        "releaseDate": "2016-06-20",
+        "lastModified": "2025-07-21 09:56:35+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": 549,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-p100-pcie-12-gb.c2915"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "p100-pcie-16gb",
+      "name": "NVIDIA P100 PCIe 16GB",
+      "epoch": {
+        "releaseDate": "2016-06-20",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 732,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-p100-pcie-16-gb.c2888"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-1080",
+      "name": "NVIDIA GeForce GTX 1080",
+      "epoch": {
+        "releaseDate": "2016-05-27",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 8,
+        "memoryBandwidthGBs": 320,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 180,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-1080.c2839"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-p100-sxm2",
+      "name": "NVIDIA Tesla P100 SXM2",
+      "epoch": {
+        "releaseDate": "2016-04-05",
+        "lastModified": "2025-10-29 21:56:40+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": null,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 300,
+        "datasheet": null
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "p100",
+      "name": "NVIDIA P100",
+      "epoch": {
+        "releaseDate": "2016-04-05",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 732,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://images.nvidia.com/content/tesla/pdf/nvidia-tesla-p100-PCIe-datasheet.pdf"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-p100-dgxs",
+      "name": "NVIDIA Tesla P100 DGXS",
+      "epoch": {
+        "releaseDate": "2016-04-05",
+        "lastModified": "2025-10-29 21:56:39+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": null,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 300,
+        "datasheet": null
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "m40",
+      "name": "NVIDIA M40",
+      "epoch": {
+        "releaseDate": "2015-11-10",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 12,
+        "memoryBandwidthGBs": 288,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-m40.c2771"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-m60",
+      "name": "NVIDIA TESLA M60",
+      "epoch": {
+        "releaseDate": "2015-08-30",
+        "lastModified": "2025-07-21 09:57:39+00:00",
+        "vramGB": 16,
+        "memoryBandwidthGBs": 321,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 300,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-m60.c2760"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-m4000",
+      "name": "NVIDIA Quadro M4000",
+      "epoch": {
+        "releaseDate": "2015-06-29",
+        "lastModified": "2025-07-21 09:57:45+00:00",
+        "vramGB": 8,
+        "memoryBandwidthGBs": 192,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 120,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-m4000.c2757"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-titan-x",
+      "name": "NVIDIA GeForce GTX TITAN X",
+      "epoch": {
+        "releaseDate": "2015-03-17",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 12,
+        "memoryBandwidthGBs": 337,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-titan-x.c2632"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-k1200",
+      "name": "NVIDIA Quadro K1200",
+      "epoch": {
+        "releaseDate": "2015-01-28",
+        "lastModified": "2025-07-21 09:58:24+00:00",
+        "vramGB": 4,
+        "memoryBandwidthGBs": 80,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 45,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-k1200.c2641"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-k80",
+      "name": "NVIDIA Tesla K80",
+      "epoch": {
+        "releaseDate": "2014-11-17",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 24,
+        "memoryBandwidthGBs": 241,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 300,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-k80.c2616; https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-product-literature/TeslaK80-datasheet.pdf"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-980",
+      "name": "NVIDIA GeForce GTX 980",
+      "epoch": {
+        "releaseDate": "2014-09-19",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 4,
+        "memoryBandwidthGBs": 224,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 165,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-980.c2621"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-titan-black",
+      "name": "NVIDIA GeForce GTX Titan Black",
+      "epoch": {
+        "releaseDate": "2014-02-18",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 6,
+        "memoryBandwidthGBs": 336,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-titan-black.c2549"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-k40s",
+      "name": "NVIDIA Tesla K40s",
+      "epoch": {
+        "releaseDate": "2013-11-22",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 12,
+        "memoryBandwidthGBs": 288,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 245,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-k40s.c2528"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-k40t",
+      "name": "NVIDIA Tesla K40t",
+      "epoch": {
+        "releaseDate": "2013-11-22",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 12,
+        "memoryBandwidthGBs": 288,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 245,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-k40t.c3403"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-k6000",
+      "name": "NVIDIA Quadro K6000",
+      "epoch": {
+        "releaseDate": "2013-07-23",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 12,
+        "memoryBandwidthGBs": 288,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 225,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-k6000.c2426"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-780",
+      "name": "NVIDIA GeForce GTX 780",
+      "epoch": {
+        "releaseDate": "2013-05-23",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 3,
+        "memoryBandwidthGBs": 288,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-780.c1701"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "quadro-k4000",
+      "name": "NVIDIA Quadro K4000",
+      "epoch": {
+        "releaseDate": "2013-03-01",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 3,
+        "memoryBandwidthGBs": 135,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 80,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/quadro-k4000.c1841"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-titan",
+      "name": "NVIDIA GeForce GTX TITAN",
+      "epoch": {
+        "releaseDate": "2013-02-19",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 6,
+        "memoryBandwidthGBs": 288,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 250,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-titan.c1996"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-k20c",
+      "name": "NVIDIA Tesla K20c",
+      "epoch": {
+        "releaseDate": "2012-11-12",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 5,
+        "memoryBandwidthGBs": 208,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 225,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/tesla-k20c.c564"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-k20x",
+      "name": "NVIDIA Tesla K20X",
+      "epoch": {
+        "releaseDate": "2012-11-12",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": null,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 235,
+        "datasheet": null
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "tesla-c2050",
+      "name": "NVIDIA Tesla C2050",
+      "epoch": {
+        "releaseDate": "2011-07-25",
+        "lastModified": "2025-07-21 10:03:40+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": null,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 238,
+        "datasheet": null
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-580",
+      "name": "NVIDIA GeForce GTX 580",
+      "epoch": {
+        "releaseDate": "2010-11-09",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 1.5,
+        "memoryBandwidthGBs": 192,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 244,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-580.c270"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "geforce-gtx-280",
+      "name": "NVIDIA GeForce GTX 280",
+      "epoch": {
+        "releaseDate": "2008-06-16",
+        "lastModified": "2026-03-18 12:56:18+00:00",
+        "vramGB": 1,
+        "memoryBandwidthGBs": 141,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": 236,
+        "datasheet": "https://www.techpowerup.com/gpu-specs/geforce-gtx-280.c216"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "rubin-cpx",
+      "name": "NVIDIA Rubin CPX",
+      "epoch": {
+        "releaseDate": null,
+        "lastModified": "2025-09-11 17:27:44+00:00",
+        "vramGB": 128,
+        "memoryBandwidthGBs": null,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": 30000
+        },
+        "intranodeGBs": null,
+        "tdpW": null,
+        "datasheet": "https://nvidianews.nvidia.com/news/nvidia-unveils-rubin-cpx-a-new-class-of-gpu-designed-for-massive-context-inference"
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    },
+    {
+      "id": "vr300-rubin-ultra",
+      "name": "NVIDIA VR300 (Rubin Ultra)",
+      "epoch": {
+        "releaseDate": null,
+        "lastModified": "2026-03-03 20:26:48+00:00",
+        "vramGB": null,
+        "memoryBandwidthGBs": null,
+        "tflops": {
+          "bf16": null,
+          "fp8": null,
+          "fp4": null
+        },
+        "intranodeGBs": null,
+        "tdpW": null,
+        "datasheet": null
+      },
+      "todo": [
+        "computeCapability (https://developer.nvidia.com/cuda-gpus) → formats",
+        "CUDA-visible memory",
+        "NVLink generation and domain",
+        "GPUs per server",
+        "sources per field"
+      ]
+    }
+  ]
+}
